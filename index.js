@@ -39,40 +39,54 @@ const books = [
   // for each li item attach one object from array of books
   const main = document.querySelector('main');
   const container = document.createElement('div');
-  container.setAttribute('class', 'container')
+  container.setAttribute('class', 'book-list')
+
+  const authors = books.map(author => author.author.split(' ').reverse().join(', '));
+  console.log(authors);
+  authors.sort();
 
   books.forEach(book => {
     const ul = document.createElement('ul');
-    ul.setAttribute('class', 'book-list card-column');
+    ul.setAttribute('class', 'book card list-unstyled d-flex justify-content-between');
 
     const liImg = document.createElement('li');
     const img = document.createElement('img');
     img.setAttribute('src', book.img);
+    img.setAttribute('class', 'book book-cover')
+
+    const link = document.createElement('a');
+    link.setAttribute('href', book.img);
+    link.setAttribute('target', '_blank');
 
     const liTitle = document.createElement('li');
-    const h2 = document.createElement('h2');
+    liTitle.setAttribute('class', 'pt-3 px-3')
     const title = document.createTextNode(book.title);
+    console.log(title);
 
     const liAuthor = document.createElement('li');
-    const h3 = document.createElement('h3');
-    const author = document.createTextNode(book.author);
+    liAuthor.setAttribute('class', 'pb-3 px-3 h6 text-muted small')
+    const author = document.createTextNode(book.author.split(' ').reverse().join(', '));
 
     const liButton = document.createElement('li');
+    liButton.setAttribute('class', 'border-top bg-light p-3 d-flex justify-content-end')
     const status = document.createElement('button');
+    status.setAttribute('class', 'btn btn-success btn-sm py-0 px-1 rounded-1')
     const statusText = () => {
       if (book.alreadyRead === true) {
         return "Read";
       } else {
+        status.setAttribute('class', 'btn btn-dark btn-sm py-0 px-1 rounded-1');
         return "To read";
       }
     }
+
+
     status.append(statusText());
     liButton.append(status);
-    h3.append(author);
-    liAuthor.append(h3)
-    h2.append(title);
-    liTitle.append(h2);
-    liImg.append(img);
+    liAuthor.append(author);
+    liTitle.append(title);
+    link.append(img);
+    liImg.append(link);
     ul.append(liImg, liTitle, liAuthor, liButton);
     container.prepend(ul);
   });
