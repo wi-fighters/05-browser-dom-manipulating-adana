@@ -27,3 +27,55 @@ const books = [
     img: "https://eloquentjavascript.net/img/cover.jpg"
   }
 ];
+
+// const titles = books.map(title => title.title);
+// const author = books.map(author => author.author);
+// const read = books.map(alreadyRead => alreadyRead.alreadyRead);
+// const img = books.map(img => img.img);
+
+(() => {
+  // target parent element - ul
+  // create li items - 4
+  // for each li item attach one object from array of books
+  const main = document.querySelector('main');
+  const container = document.createElement('div');
+  container.setAttribute('class', 'container')
+
+  books.forEach(book => {
+    const ul = document.createElement('ul');
+    ul.setAttribute('class', 'book-list card-column');
+
+    const liImg = document.createElement('li');
+    const img = document.createElement('img');
+    img.setAttribute('src', book.img);
+
+    const liTitle = document.createElement('li');
+    const h2 = document.createElement('h2');
+    const title = document.createTextNode(book.title);
+
+    const liAuthor = document.createElement('li');
+    const h3 = document.createElement('h3');
+    const author = document.createTextNode(book.author);
+
+    const liButton = document.createElement('li');
+    const status = document.createElement('button');
+    const statusText = () => {
+      if (book.alreadyRead === true) {
+        return "Read";
+      } else {
+        return "To read";
+      }
+    }
+    status.append(statusText());
+    liButton.append(status);
+    h3.append(author);
+    liAuthor.append(h3)
+    h2.append(title);
+    liTitle.append(h2);
+    liImg.append(img);
+    ul.append(liImg, liTitle, liAuthor, liButton);
+    container.prepend(ul);
+  });
+
+  main.append(container);
+})();
